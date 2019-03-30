@@ -7,9 +7,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
+
 import br.com.etechoracio.common.model.BaseORM;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,7 +24,7 @@ public class Aluno extends BaseORM {
 
 	@Id
 	@GeneratedValue
-	@JoinColumn(name = "ID_ALUNO")
+	@Column(name = "ID_ALUNO")
 	private Long id;
 
 	@Column(name = "NM_ALUNO")
@@ -44,4 +45,10 @@ public class Aluno extends BaseORM {
 	@OneToOne(mappedBy = "aluno", cascade = CascadeType.ALL)
 	private Endereco endereco = new Endereco();
 
+	@PrePersist
+	private void preencherDataCriacao() {
+		if (dataCriacao == null) {
+			dataCriacao = new Date();
+		}
+	}
 }

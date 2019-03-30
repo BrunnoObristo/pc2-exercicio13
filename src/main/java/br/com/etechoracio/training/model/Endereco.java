@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import br.com.etechoracio.common.model.BaseORM;
@@ -53,5 +54,13 @@ public class Endereco extends BaseORM {
 	@OneToOne
 	@JoinColumn(name="ID_ALUNO")
 	private Aluno aluno;
+	
+	@PrePersist
+	private void preencherUF(){
+		if(uf == null) {
+			uf = "SP";
+			
+		}
+	}
 	
 }
